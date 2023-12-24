@@ -18,11 +18,6 @@ function selectOrder($conn, $tourId, $username)
         return executeQuery($conn, $sql);
     }
     
-function updateOrder($conn, $orderId, $newQuantity)
-    {
-        $sql = "UPDATE orders SET kolvo = '$newQuantity' WHERE id = '$orderId'";  
-        return executeQuery($conn, $sql);
-    }
 function addOrder($conn, $tourId, $username)
     {
         $sql = "INSERT INTO orders (cl_username, tour_id, kolvo) VALUES ('$username', '$tourId', 1)";  

@@ -24,8 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
         echo 'Заказ уже существовал, так что мы прибавим количество!';
         $row = $result->fetch_assoc();
         $orderId = $row['id'];
-        $newQuantity = $row['kolvo'] + 1;
-        $result = updateOrder($conn, $orderId, $newQuantity);
+        $result = plusKolvo($conn, $orderId);
 
     } else {
         echo 'Заказа не было, добавляем';
