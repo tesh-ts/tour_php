@@ -11,7 +11,6 @@ function executeQuery($conn, $sql)
         }
     }
     
-     
 function selectOrder($conn, $tourId, $username)
     {
         $sql = "SELECT id, kolvo FROM orders WHERE cl_username = '$username' AND tour_id = '$tourId'";
