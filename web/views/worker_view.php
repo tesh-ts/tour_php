@@ -1,3 +1,4 @@
+
 <?php
 if (!isset($_SESSION['username'])) {
     header("Location: ../controllers/login_controller.php");
@@ -10,7 +11,6 @@ $tours = $getToursStmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
 
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
-
     ?>
     <h2>Доступные туры:</h2>
     <ul>
@@ -21,7 +21,6 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         <?php endforeach; ?>
     </ul>
     <?php
-
     exit();
 }
 ?>
