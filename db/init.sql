@@ -57,7 +57,19 @@ insert into tours (country, town, duration, price, provider_id) values
 ("Italy", "Milan","4 days", 400, 2),
 ("Spain", "Madrid","1 week", 900, 6),
 ("Cyprus", "Pafos","2 weeks", 2500, 4),
-("Portugal", "Lisabon","3 days", 400, 5);
+("Portugal", "Lisbon","3 days", 400, 5),
+("Japan", "Tokyo", "2 weeks", 2500, 4),
+("Australia", "Sydney", "10 days", 1800, 3),
+("Canada", "Vancouver", "10 week", 1500, 2),
+("Brazil", "Rio de Janeiro", "30 days", 8000, 1),
+("France", "Bordeaux", "2 weeks", 3000, 2),
+("Portugal", "Albufeira", "1 week", 1200, 2),
+("France", "Marseille", "5 days", 1000, 5),
+("Russia", "Moscow", "10 days", 2000, 6),
+("Portugal", "Braga", "45 days", 2200, 4),
+("Russia", "Saratov", "12 week", 6789, 3),
+("Greece", "Athens", "100 days", 45000, 1),
+("France", "Lyon", "2 weeks", 1500, 5);
 
 
 

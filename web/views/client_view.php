@@ -18,6 +18,19 @@ if ($getOrdersStmt === false) {
 $getOrdersStmt->bind_param('s', $username);
 $getOrdersStmt->execute();
 $orders = $getOrdersStmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+
+$totalPrice = 0;
+foreach ($orders as $order) {
+    $tourId = $order['tour_id'];
+    $getTourPriceStmt = $conn->prepare("SELECT price FROM tours WHERE id = ?");
+    $getTourPriceStmt->bind_param('i', $tourId);
+    $getTourPriceStmt->execute();
+    $tourPrice = $getTourPriceStmt->get_result()->fetch_assoc()['price'];
+
+    $totalPrice += $tourPrice * $order['kolvo'];
+
+}
 ?>
 
 
@@ -52,27 +65,40 @@ $orders = $getOrdersStmt->get_result()->fetch_all(MYSQLI_ASSOC);
     <h2>Ваш заказ:</h2>
     <ul>
         <?php foreach ($orders as $order): ?>
-            <li>
-                <?php echo 'Тур №' . $order['tour_id'] . ', Количество:' . $order['kolvo']; ?>.
+            <li class="order-item">
+                <?php echo 'Тур №' . $order['tour_id'] . ', Количество: ' . $order['kolvo']; ?>
                 <form method="post" id="deleteTourForm">
                     <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
                     <button type="submit" name="remove_order">Удалить заказ</button> 
-                </form><br>
+                </form>
                 <form method="post" id="plusTourForm">
                     <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
                     <button type="submit" name="increase_quantity">+</button> 
-                </form> <br>
+                </form>
                 <form method="post" id="minusTourForm">
                     <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
                     <button type="submit" name="decrease_quantity">-</button>
                 </form><br>
             </li>
+            
         <?php endforeach; ?>
+        <h3>Общая сумма в корзине: <?php echo $totalPrice; ?> $</h3>
     </ul>
 
     <p><a href="../logout.php">Выйти из учетной записи</a></p> <br>
     <p><a href="../index.php">Вернуться на главную страницу</a></p>
     </div>
+    <style>
+        .order-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px; 
+        }
+
+        .order-item form {
+            margin-left: 10px;
+        }
+    </style>
     <script>
 
         function updatePage() {
