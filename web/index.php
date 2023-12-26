@@ -31,34 +31,48 @@ if (isset($_POST["btnSearchRating"])) {
 }
 
 
+    
 $tables = ['orders', 'user', 'tours', 'providers'];
-
+$username = $_SESSION['username'];
 
 foreach ($tables as $table) {
     echo "<h1 id='$table'><a name='$table'>$table</a></h1>";
-       
 
-    $sqlSelect = "SELECT * FROM $table";
-    $resultSelect = executeQuery($conn, $sqlSelect);
-    echo "<table><tr>";
-    $headers = array_keys($resultSelect->fetch_assoc());
-    foreach ($headers as $header) {
-        echo "<th>$header</th>";
+    if ($table === 'orders') {
+        $sqlSelect = "SELECT * FROM $table WHERE cl_username = '$username'";
+    } elseif ($table === 'user') {
+        $sqlSelect = "SELECT * FROM $table WHERE username = '$username'";
+    } else {
+        $sqlSelect = "SELECT * FROM $table";
     }
-    echo "</tr>";
 
-    $resultSelect->data_seek(0);
-    while ($row = $resultSelect->fetch_assoc()) {
-        echo "<tr>";
-        foreach ($row as $value) {
-            echo "<td>$value</td>";
+    $resultSelect = executeQuery($conn, $sqlSelect);
+    if ($resultSelect->num_rows > 0) {
+        echo "<table><tr>";
+
+        $headers = array_keys($resultSelect->fetch_assoc());
+        foreach ($headers as $header) {
+            echo "<th>$header</th>";
         }
         echo "</tr>";
+
+        $resultSelect->data_seek(0);
+        while ($row = $resultSelect->fetch_assoc()) {
+            echo "<tr>";
+            foreach ($row as $value) {
+                echo "<td>$value</td>";
+            }
+            echo "</tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "<p>No records found for $table.</p>";
     }
-    echo "</table>";
-        
 }
-    
+
+
+
+
 
     
 $conn->close();
