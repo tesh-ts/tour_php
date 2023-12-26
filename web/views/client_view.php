@@ -31,37 +31,8 @@ foreach ($orders as $order) {
     $totalPrice += $tourPrice * $order['kolvo'];
 
 }
-?>
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Личный кабинет</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-</head>
-<body>
-    <div id="full">
-    <h1>Личный кабинет клиента</h1>
-    <p>Привет, <?php echo $_SESSION['username']; ?>!</p>
-
-    <h2>Доступные туры:</h2>
-    <ul>
-        <?php foreach ($tours as $tour): ?>
-            <li>
-                <?php echo $tour['id'] . '. ' . $tour['country'] . ', ' . $tour['town'] . ' - ' . $tour['price']; ?> $.
-                <form method="post" id="addTourForm">
-                    <input type="hidden" name="tour_id" value="<?php echo $tour['id']; ?>">
-                    <button type="submit" name="add_to_cart">Добавить в корзину</button>
-                </form>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-
+if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+    ?>
     <h2>Ваш заказ:</h2>
     <ul>
         <?php foreach ($orders as $order): ?>
@@ -84,10 +55,48 @@ foreach ($orders as $order) {
         <?php endforeach; ?>
         <h3>Общая сумма в корзине: <?php echo $totalPrice; ?> $</h3>
     </ul>
+    
 
-    <p><a href="../logout.php">Выйти из учетной записи</a></p> <br>
+    <?php
+    exit();
+}
+?>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+</head>
+<body>
+    <h1>Личный кабинет клиента</h1>
+    <p>Привет, <?php echo $_SESSION['username']; ?>!</p>
+    <p><a href="../logout.php">Выйти из учетной записи</a></p>
     <p><a href="../index.php">Вернуться на главную страницу</a></p>
+    <div class="full">
+        <div class="tours-container">
+        <h2>Доступные туры:</h2>
+        <ul>
+            <?php foreach ($tours as $tour): ?>
+                <li>
+                    <?php echo $tour['id'] . '. ' . $tour['country'] . ', ' . $tour['town'] . ' - ' . $tour['price']; ?> $.
+                    <form method="post" id="addTourForm">
+                        <input type="hidden" name="tour_id" value="<?php echo $tour['id']; ?>">
+                        <button type="submit" name="add_to_cart">Добавить в корзину</button>
+                    </form>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        
+        </div>
+        <div id="ordersTableContainer"></div>
     </div>
+    
     <style>
         .order-item {
             display: flex;
@@ -98,6 +107,12 @@ foreach ($orders as $order) {
         .order-item form {
             margin-left: 10px;
         }
+        .full {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        
     </style>
     <script>
 
@@ -107,7 +122,7 @@ foreach ($orders as $order) {
                 url: 'client_controller.php',
                 data: { },
                 success: function(response) {
-                    $('#full').empty().html(response);
+                    $('#ordersTableContainer').empty().html(response);
                 },
                 error: function(error) {
                     console.error('Ошибка AJAX:', error);
