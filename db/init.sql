@@ -51,12 +51,12 @@ insert into providers (name, telephone, email, rating) values
 
 insert into tours (country, town, duration, price, provider_id) values
 ("Spain", "Barcelona", "2 weeks", 1600, 1),
-("Italy", "Rome", "1 weeks", 1800, 2),
-("Spain", "Valencia","5 days", 500, 1),
+("Italy", "Rome", "1 weeks", 1884, 2),
+("Spain", "Valencia","5 days", 999, 1),
 ("France", "Paris","12 days", 200, 3),
-("Italy", "Milan","4 days", 400, 2),
+("Italy", "Milan","4 days", 455, 5),
 ("Spain", "Madrid","1 week", 900, 6),
-("Cyprus", "Pafos","2 weeks", 2500, 4),
+("Cyprus", "Pafos","2 weeks", 2555, 4),
 ("Portugal", "Lisbon","3 days", 400, 5),
 ("Japan", "Tokyo", "2 weeks", 2500, 4),
 ("Australia", "Sydney", "10 days", 1800, 3),
@@ -65,11 +65,11 @@ insert into tours (country, town, duration, price, provider_id) values
 ("France", "Bordeaux", "2 weeks", 3000, 2),
 ("Portugal", "Albufeira", "1 week", 1200, 2),
 ("France", "Marseille", "5 days", 1000, 5),
-("Russia", "Moscow", "10 days", 2000, 6),
+("Russia", "Moscow", "10 days", 2995, 6),
 ("Portugal", "Braga", "45 days", 2200, 4),
 ("Russia", "Saratov", "12 week", 6789, 3),
 ("Greece", "Athens", "100 days", 45000, 1),
-("France", "Lyon", "2 weeks", 1500, 5);
+("France", "Lyon", "2 weeks", 1515, 5);
 
 
 
